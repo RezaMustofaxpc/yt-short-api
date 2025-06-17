@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import yt_dlp
 import moviepy.editor as mp
-import whisper
+from faster_whisper import WhisperModel
 import uuid
 import os
 import random
@@ -27,10 +27,10 @@ def generate_short(data: VideoInput):
     end = min(start + random.uniform(5, 80), clip.duration)
     short_clip = clip.subclip(start, end)
 
-    model = whisper.load_model("base")
-    result = model.transcribe(input_file)
-    print("Caption:", result["text"])
+    model = WhisperModel("base")
+    segments, _ = model.transcribe(input_file)
+    caption_text = " ".join([seg.text for seg in segments])
+    print("Caption:", caption_text)
 
     short_clip.write_videofile(output_file)
-
-    return {"video_url": f"https://your-cdn.com/videos/{output_file}"}
+    return {"message": "Video processed successfully!"}
