@@ -34,3 +34,6 @@ def generate_short(data: VideoInput):
 
     short_clip.write_videofile(output_file)
     return {"message": "Video processed successfully!"}
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
