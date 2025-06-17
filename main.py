@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import yt_dlp
-import moviepy.editor as mp
+from moviepy.editor import VideoFileClip
 from faster_whisper import WhisperModel
 import uuid
 import os
