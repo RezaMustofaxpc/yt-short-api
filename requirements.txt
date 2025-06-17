@@ -2,9 +2,9 @@ fastapi
 uvicorn
 yt-dlp
 moviepy[optional]
-imageio-ffmpeg
-numpy
 faster-whisper
 ffmpeg-python
 python-multipart
 pydantic
+imageio-ffmpeg
+numpy
