@@ -20,10 +20,18 @@ def generate_short(data: VideoInput):
     output_file = f"short_{uid}.mp4"
 
     ydl_opts = {
-    'outtmpl': input_file,
-    'format': 'bestvideo+bestaudio',
-    'cookiefile': 'youtube_cookies.txt'
-}
+        'outtmpl': input_file,
+        'format': 'bestvideo+bestaudio',
+        'cookiefile': 'youtube_cookies.txt',
+        'quiet': False,
+        'noplaylist': True
+    }
+
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([data.youtube_url])
+
+    if not os.path.exists(input_file):
+        raise FileNotFoundError(f"Download failed. File '{input_file}' not found.")
 
     clip = mp.VideoFileClip(input_file)
     start = random.uniform(0, max(1, clip.duration - 80))
@@ -36,7 +44,8 @@ def generate_short(data: VideoInput):
     print("Caption:", caption_text)
 
     short_clip.write_videofile(output_file)
-    return {"message": "Video processed successfully!"}
+
+    return {"message": "Video processed successfully!", "output_file": output_file}
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
