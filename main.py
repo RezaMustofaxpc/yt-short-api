@@ -18,9 +18,11 @@ def generate_short(data: VideoInput):
     input_file = f"{uid}.mp4"
     output_file = f"short_{uid}.mp4"
 
-    ydl_opts = {'outtmpl': input_file, 'format': 'bestvideo+bestaudio'}
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([data.youtube_url])
+    ydl_opts = {
+    'outtmpl': input_file,
+    'format': 'bestvideo+bestaudio',
+    'cookiefile': 'youtube_cookies.txt'
+}
 
     clip = mp.VideoFileClip(input_file)
     start = random.uniform(0, max(1, clip.duration - 80))
