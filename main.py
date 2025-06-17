@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import yt_dlp
-from moviepy.editor import VideoFileClip
+import moviepy.editor as mp
 from faster_whisper import WhisperModel
 import uuid
 import os
 import random
+
 
 app = FastAPI()
 
